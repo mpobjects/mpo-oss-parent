@@ -72,12 +72,12 @@
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-jar-plugin</artifactId>
 					<version>${maven-jar-plugin}</version>
-					<inherited>true</inherited>
 					<configuration>
 						<archive>
 							<manifestEntries>
 								<Build-Timestamp>${maven.build.timestamp}</Build-Timestamp>
 								<Build-Revision>${build.scm.revision}</Build-Revision>
+								<Build-Branch>${build.scm.branch}</Build-Branch>
 							</manifestEntries>
 						</archive>
 					</configuration>
@@ -129,6 +129,7 @@
 				<executions>
 					<execution>
 						<id>attach-source</id>
+						<phase>verify</phase>
 						<goals>
 							<goal>jar</goal>
 						</goals>
@@ -141,6 +142,7 @@
 				<executions>
 					<execution>
 						<id>attach-javadoc</id>
+						<phase>verify</phase>
 						<goals>
 							<goal>jar</goal>
 						</goals>
@@ -164,6 +166,7 @@
 					<execution>
 						<!-- set property formatter.skip to skip  -->
 						<id>validate-format</id>
+						<phase>validate</phase>
 						<goals>
 							<goal>validate</goal>
 						</goals>
