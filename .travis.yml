@@ -1,5 +1,6 @@
-jdk: openjdk8
-branches: 
+dist: trusty
+jdk: openjdk7
+branches:
   only:
   - master
 cache:
