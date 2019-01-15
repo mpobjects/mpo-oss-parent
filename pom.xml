@@ -14,6 +14,14 @@
 		<name>MP Objects</name>
 		<url>http://www.mp-objects.com</url>
 	</organization>
+	
+	<licenses>
+		<license>
+			<name>Apache License, Version 2.0</name>
+			<url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
 
 	<scm>
 		<connection>scm:git:https://github.com/mpobjects/mpo-oss-parent.git</connection>
@@ -24,6 +32,17 @@
 		<system>Travis</system>
 		<url>https://travis-ci.org/mpobjects/mpo-oss-parent</url>
 	</ciManagement>
+
+	<distributionManagement>
+		<snapshotRepository>
+			<id>ossrh</id>
+			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
+		</snapshotRepository>
+		<repository>
+			<id>ossrh</id>
+			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+		</repository>
+	</distributionManagement>
 
 	<build>
 		<pluginManagement>
@@ -88,6 +107,19 @@
 					<artifactId>maven-checkstyle-plugin</artifactId>
 					<version>${maven-checkstyle-plugin}</version>
 				</plugin>
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>findbugs-maven-plugin</artifactId>
+					<version>${findbugs-maven-plugin}</version>
+				</plugin>
+				<plugin>
+					<groupId>net.revelc.code.formatter</groupId>
+					<artifactId>formatter-maven-plugin</artifactId>
+					<version>${formatter-maven-plugin}</version>
+					<configuration>
+						<lineEnding>KEEP</lineEnding>
+					</configuration>
+				</plugin>
 			</plugins>
 		</pluginManagement>
 		<plugins>
@@ -124,20 +156,19 @@
 					<nexusUrl>https://oss.sonatype.org/</nexusUrl>
 					<autoReleaseAfterClose>true</autoReleaseAfterClose>
 				</configuration>
-			</plugin><!-- 
+			</plugin>
 			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-checkstyle-plugin</artifactId>
+				<groupId>net.revelc.code.formatter</groupId>
+				<artifactId>formatter-maven-plugin</artifactId>
 				<executions>
 					<execution>
-						<id>validate-checkstyle</id>
-						<phase>validate</phase>
+						<!-- set property formatter.skip to skip  -->
+						<id>validate-format</id>
 						<goals>
-							<goal>checkstyle</goal>
+							<goal>validate</goal>
 						</goals>
 						<configuration>
-							<configLocation>checkstyle-strict.xml</configLocation>
-							<encoding>UTF-8</encoding>
+							<configFile>eclipse/java-format.xml</configFile>
 						</configuration>
 					</execution>
 				</executions>
@@ -148,7 +179,47 @@
 						<version>${mpo-qa-profiles}</version>
 					</dependency>
 				</dependencies>
-			</plugin> -->
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-checkstyle-plugin</artifactId>
+				<executions>
+					<execution>
+						<!-- set property checkstyle.skip to skip  -->
+						<id>validate-checkstyle</id>
+						<phase>validate</phase>
+						<goals>
+							<goal>check</goal>
+						</goals>
+						<configuration>
+							<configLocation>checkstyle/strict.xml</configLocation>
+							<encoding>UTF-8</encoding>
+							<consoleOutput>true</consoleOutput>
+						</configuration>
+					</execution>
+				</executions>
+				<dependencies>
+					<dependency>
+						<groupId>com.mpobjects</groupId>
+						<artifactId>mpo-qa-profiles</artifactId>
+						<version>${mpo-qa-profiles}</version>
+					</dependency>
+				</dependencies>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>findbugs-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<!-- set property findbugs.skip to skip  -->
+						<id>validate-findbugs</id>
+						<phase>validate</phase>
+						<goals>
+							<goal>check</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 			<plugin>
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
@@ -191,8 +262,10 @@
 		<jacoco-maven-plugin>0.8.2</jacoco-maven-plugin>
 		<nexus-staging-maven-plugin>1.6.8</nexus-staging-maven-plugin>
 		<coveralls-maven-plugin>4.3.0</coveralls-maven-plugin>
-		<maven-checkstyle-plugin>2.17</maven-checkstyle-plugin>
+		<maven-checkstyle-plugin>3.0.0</maven-checkstyle-plugin>
 		<mpo-qa-profiles>1.0.0-SNAPSHOT</mpo-qa-profiles>
+		<findbugs-maven-plugin>3.0.5</findbugs-maven-plugin>
+		<formatter-maven-plugin>2.8.1</formatter-maven-plugin>
 	</properties>
 
 	<profiles>
@@ -207,7 +280,7 @@
 				<build.url>undefined</build.url>
 				<build.scm.revision>undefined</build.scm.revision>
 				<build.scm.branch>undefined</build.scm.branch>
-			</properties>			
+			</properties>
 		</profile>
 		<profile>
 			<id>travis-ci</id>
@@ -222,18 +295,58 @@
 				<build.url>${env.TRAVIS_BUILD_WEB_URL}</build.url>
 				<build.scm.revision>${env.TRAVIS_COMMIT}</build.scm.revision>
 				<build.scm.branch>${env.TRAVIS_BRANCH}</build.scm.branch>
-			</properties>			
+			</properties>
+		</profile>
+		<profile>
+			<id>eclipse</id>
+			<activation>
+				<property>
+					<name>m2e.version</name>
+				</property>
+			</activation>
+			<build>
+				<pluginManagement>
+					<plugins>
+						<plugin>
+							<groupId>org.eclipse.m2e</groupId>
+							<artifactId>lifecycle-mapping</artifactId>
+							<version>1.0.0</version>
+							<configuration>
+								<lifecycleMappingMetadata>
+									<pluginExecutions>
+										<pluginExecution>
+											<pluginExecutionFilter>
+												<groupId>org.apache.maven.plugins</groupId>
+												<artifactId>maven-checkstyle-plugin</artifactId>
+												<versionRange>[3,)</versionRange>
+												<goals>
+													<goal>check</goal>
+												</goals>
+											</pluginExecutionFilter>
+											<action>
+												<ignore />
+											</action>
+										</pluginExecution>
+										<pluginExecution>
+											<pluginExecutionFilter>
+												<groupId>org.codehaus.mojo</groupId>
+												<artifactId>findbugs-maven-plugin</artifactId>
+												<versionRange>[3,)</versionRange>
+												<goals>
+													<goal>check</goal>
+												</goals>
+											</pluginExecutionFilter>
+											<action>
+												<ignore />
+											</action>
+										</pluginExecution>
+									</pluginExecutions>
+								</lifecycleMappingMetadata>
+							</configuration>
+						</plugin>
+					</plugins>
+				</pluginManagement>
+			</build>
 		</profile>
 	</profiles>
-
-	<distributionManagement>
-		<snapshotRepository>
-			<id>ossrh</id>
-			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
-		</snapshotRepository>
-		<repository>
-			<id>ossrh</id>
-			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-		</repository>
-	</distributionManagement>
 </project>
