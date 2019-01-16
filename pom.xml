@@ -180,7 +180,6 @@
 					<execution>
 						<!-- set property formatter.skip to skip -->
 						<id>validate-format</id>
-						<phase>validate</phase>
 						<goals>
 							<goal>validate</goal>
 						</goals>
@@ -205,7 +204,6 @@
 					<execution>
 						<!-- set property checkstyle.skip to skip -->
 						<id>validate-checkstyle</id>
-						<phase>validate</phase>
 						<goals>
 							<goal>check</goal>
 						</goals>
@@ -231,7 +229,6 @@
 					<execution>
 						<!-- set property findbugs.skip to skip -->
 						<id>validate-findbugs</id>
-						<phase>validate</phase>
 						<goals>
 							<goal>check</goal>
 						</goals>
