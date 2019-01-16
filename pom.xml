@@ -133,10 +133,6 @@
 					<groupId>net.revelc.code.formatter</groupId>
 					<artifactId>formatter-maven-plugin</artifactId>
 					<version>${formatter-maven-plugin}</version>
-					<inherited>true</inherited>
-					<configuration>
-						<lineEnding>KEEP</lineEnding>
-					</configuration>
 				</plugin>
 			</plugins>
 		</pluginManagement>
@@ -190,7 +186,7 @@
 						</goals>
 						<configuration>
 							<configFile>eclipse/java-format.xml</configFile>
-							<lineEnding>KEEP</lineEnding>
+							<lineEnding>CRLF</lineEnding>
 						</configuration>
 					</execution>
 				</executions>
