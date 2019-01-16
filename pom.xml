@@ -9,12 +9,22 @@
 	<name>MPO OSS Parent</name>
 	<description>Parent Maven module for MP Objects OSS Projects</description>
 	<inceptionYear>2019</inceptionYear>
+	<url>https://github.com/mpobjects/mpo-oss-parent</url>
 
 	<organization>
 		<name>MP Objects</name>
 		<url>http://www.mp-objects.com</url>
 	</organization>
-	
+
+	<developers>
+		<developer>
+			<name>Michiel Hendriks</name>
+			<email>michiel.hendriks@mp-objects.com</email>
+			<organization>MP Objects</organization>
+			<organizationUrl>http://www.mp-objects.com</organizationUrl>
+		</developer>
+	</developers>
+
 	<licenses>
 		<license>
 			<name>Apache License, Version 2.0</name>
@@ -25,6 +35,7 @@
 
 	<scm>
 		<connection>scm:git:https://github.com/mpobjects/mpo-oss-parent.git</connection>
+		<developerConnection>scm:git:https://github.com/mpobjects/mpo-oss-parent.git</developerConnection>
 		<url>https://github.com/mpobjects/mpo-oss-parent.git</url>
 	</scm>
 
@@ -169,7 +180,7 @@
 				<artifactId>formatter-maven-plugin</artifactId>
 				<executions>
 					<execution>
-						<!-- set property formatter.skip to skip  -->
+						<!-- set property formatter.skip to skip -->
 						<id>validate-format</id>
 						<phase>validate</phase>
 						<goals>
@@ -193,7 +204,7 @@
 				<artifactId>maven-checkstyle-plugin</artifactId>
 				<executions>
 					<execution>
-						<!-- set property checkstyle.skip to skip  -->
+						<!-- set property checkstyle.skip to skip -->
 						<id>validate-checkstyle</id>
 						<phase>validate</phase>
 						<goals>
@@ -219,7 +230,7 @@
 				<artifactId>findbugs-maven-plugin</artifactId>
 				<executions>
 					<execution>
-						<!-- set property findbugs.skip to skip  -->
+						<!-- set property findbugs.skip to skip -->
 						<id>validate-findbugs</id>
 						<phase>validate</phase>
 						<goals>
@@ -272,7 +283,7 @@
 		<nexus-staging-maven-plugin>1.6.8</nexus-staging-maven-plugin>
 		<coveralls-maven-plugin>4.3.0</coveralls-maven-plugin>
 		<maven-checkstyle-plugin>3.0.0</maven-checkstyle-plugin>
-		<mpo-qa-profiles>1.0.0-SNAPSHOT</mpo-qa-profiles>
+		<mpo-qa-profiles>1.0.1</mpo-qa-profiles>
 		<findbugs-maven-plugin>3.0.5</findbugs-maven-plugin>
 		<formatter-maven-plugin>2.8.1</formatter-maven-plugin>
 	</properties>
