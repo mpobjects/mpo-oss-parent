@@ -272,6 +272,7 @@
 		<maven.compiler.target>${java-version}</maven.compiler.target>
 		<maven.compiler.source>${java-version}</maven.compiler.source>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
 		<maven-compiler-plugin>3.8.0</maven-compiler-plugin>
 		<maven-source-plugin>3.0.1</maven-source-plugin>
@@ -283,12 +284,34 @@
 		<nexus-staging-maven-plugin>1.6.8</nexus-staging-maven-plugin>
 		<coveralls-maven-plugin>4.3.0</coveralls-maven-plugin>
 		<maven-checkstyle-plugin>3.0.0</maven-checkstyle-plugin>
-		<mpo-qa-profiles>1.0.1</mpo-qa-profiles>
+		<mpo-qa-profiles>1.0.2</mpo-qa-profiles>
 		<findbugs-maven-plugin>3.0.5</findbugs-maven-plugin>
 		<formatter-maven-plugin>2.8.1</formatter-maven-plugin>
 	</properties>
 
 	<profiles>
+		<profile>
+			<id>non-java-project</id>
+			<activation>
+				<file>
+					<missing>src/main/java</missing>
+				</file>
+			</activation>
+			<properties>
+				<formatter.skip>true</formatter.skip>
+				<checkstyle.skip>true</checkstyle.skip>
+				<findbugs.skip>true</findbugs.skip>
+			</properties>
+		</profile>
+		<profile>
+			<id>java-7</id>
+			<activation>
+				<jdk>1.7</jdk>
+			</activation>
+			<properties>
+				<formatter-maven-plugin>2.0.1</formatter-maven-plugin>
+			</properties>
+		</profile>
 		<profile>
 			<id>default-build-properties</id>
 			<activation>
