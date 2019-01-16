@@ -190,6 +190,7 @@
 						</goals>
 						<configuration>
 							<configFile>eclipse/java-format.xml</configFile>
+							<lineEnding>KEEP</lineEnding>
 						</configuration>
 					</execution>
 				</executions>
