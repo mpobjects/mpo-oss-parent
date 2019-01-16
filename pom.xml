@@ -83,6 +83,11 @@
 					</configuration>
 				</plugin>
 				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId></artifactId>
+					<version>${maven-release-plugin}</version>
+				</plugin>
+				<plugin>
 					<groupId>org.jacoco</groupId>
 					<artifactId>jacoco-maven-plugin</artifactId>
 					<version>${jacoco-maven-plugin}</version>
@@ -261,6 +266,7 @@
 		<maven-source-plugin>3.0.1</maven-source-plugin>
 		<maven-javadoc-plugin>3.0.1</maven-javadoc-plugin>
 		<maven-jar-plugin>3.1.1</maven-jar-plugin>
+		<maven-release-plugin>2.5.3</maven-release-plugin>
 		<maven-gpg-plugin>1.6</maven-gpg-plugin>
 		<jacoco-maven-plugin>0.8.2</jacoco-maven-plugin>
 		<nexus-staging-maven-plugin>1.6.8</nexus-staging-maven-plugin>
