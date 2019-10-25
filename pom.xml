@@ -157,6 +157,7 @@
 					<configuration>
 						<configLocation>checkstyle/strict.xml</configLocation>
 						<encoding>UTF-8</encoding>
+						<consoleOutput>true</consoleOutput>
 						<sourceDirectories>
 							<sourceDirectory>${project.build.sourceDirectory}</sourceDirectory>
 						</sourceDirectories>
@@ -294,10 +295,6 @@
 						<goals>
 							<goal>check</goal>
 						</goals>
-						<configuration>
-							<logViolationsToConsole>false</logViolationsToConsole>
-							<failOnViolation>false</failOnViolation>
-						</configuration>
 					</execution>
 				</executions>
 			</plugin>
@@ -312,9 +309,6 @@
 						<goals>
 							<goal>check</goal>
 						</goals>
-						<configuration>
-							<failOnError>false</failOnError>
-						</configuration>
 					</execution>
 				</executions>
 			</plugin>
@@ -329,9 +323,6 @@
 						<goals>
 							<goal>check</goal>
 						</goals>
-						<configuration>
-							<failOnError>false</failOnError>
-						</configuration>
 					</execution>
 				</executions>
 			</plugin>
@@ -373,7 +364,7 @@
 	</reporting>
 
 	<properties>
-		<java-version>1.7</java-version>
+		<java-version>1.8</java-version>
 		<maven.compiler.target>${java-version}</maven.compiler.target>
 		<maven.compiler.source>${java-version}</maven.compiler.source>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -392,7 +383,7 @@
 		<maven-surefire-report-plugin>2.22.2</maven-surefire-report-plugin>
 		<maven-project-info-reports-plugin>3.0.0</maven-project-info-reports-plugin>
 
-		<mpo-qa-profiles>1.0.2</mpo-qa-profiles>
+		<mpo-qa-profiles>1.0.3</mpo-qa-profiles>
 
 		<jacoco-maven-plugin>0.8.2</jacoco-maven-plugin>
 		<nexus-staging-maven-plugin>1.6.8</nexus-staging-maven-plugin>
